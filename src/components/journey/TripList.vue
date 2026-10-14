@@ -125,13 +125,14 @@ export default defineComponent({
   font-weight: 700;
   color: #ffffff;
 }
+
 /* Tabs */
 .jour-tabs {
   position: relative;
   top:8px;
   display: flex;
   gap: 8px;
-  margin-bottom: 8px;
+  margin-bottom: 24px;
 }
 
 .tab-item {
@@ -157,10 +158,8 @@ export default defineComponent({
   display: flex;
   overflow-x: auto;
   gap: 16px;
-  padding-bottom: 16px;
+  padding-bottom: 4px;
   margin: 0;
-  padding-left: 20px;
-  padding-right: 20px;
   scrollbar-width: none;
 }
 
@@ -169,8 +168,8 @@ export default defineComponent({
 }
 
 .exp-card {
-  width: 240px;
-  height: 240px;
+  width: 220px;
+  height: 220px;
   background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -190,11 +189,11 @@ export default defineComponent({
 }
 
 .exp-info {
-  padding: 16px;
+  padding: 8px;
 }
 
 .exp-title {
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 700;
   color: #4a3d6e;
   margin-bottom: 8px;
@@ -203,9 +202,9 @@ export default defineComponent({
 .exp-meta {
   display: flex;
   align-items: center;
-  font-size: 13px;
+  font-size: 12px;
   color: #9a8bc5;
-  margin-bottom: 12px;
+  margin-bottom: 4px;
 }
 
 .clock-icon {
@@ -216,7 +215,7 @@ export default defineComponent({
 }
 
 .exp-progress {
-  height: 8px;
+  height: 4px;
   background: rgba(186, 171, 218, 0.2);
   border-radius: 3px;
   overflow: hidden;
@@ -232,7 +231,7 @@ export default defineComponent({
 /* View More */
 .jour-view-more {
   text-align: right;
-  margin: 0px 0 24px;
+  margin: 0px 0 16px;
   font-size: 14px;
   color: #baabda;
   font-weight: 500;

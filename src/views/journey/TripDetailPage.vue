@@ -96,8 +96,6 @@
       <img src="@/assets/icons/mytravel/mytravel-startwrite.png" alt="图标" class="mytravel-startwriteimg">
       <div class="mytravel-startwrite">Start Planning</div>
     </div>
-
-    <div class="mytravel-bottom-last"></div>
   </div>
 
 </template>
@@ -192,11 +190,10 @@ const tips = [
   color: #3d2e5c;
 }
 
-
 .mytravel-header {
   display: flex;
   justify-content: space-between;
-  padding: 32px;
+  padding: 24px 24px 16px;
   align-items: center;
 }
 .mytravel-title {
@@ -205,14 +202,10 @@ const tips = [
   color: #4a3d6e;
 }
 .mytravel-back {
-  top:32px;
-  left:16px;
-  right: 16px;
   height: 40px;
   width: 40px;
 }
 .mytravel-share{
-  top:32px;
   left:290px;
   height: 40px;
   width: 40px;
@@ -239,7 +232,7 @@ const tips = [
 }
 .mytravel-info {
   flex: 1;
-  margin-left: 12px;
+  margin-left: 16px;
 }
 .mytravel-title-beijing{
   font-size: 16px;
@@ -261,8 +254,8 @@ const tips = [
 .mytravel-preview-btn {
   color: #9b6dff;
   border-radius: 20px;
-  padding: 4px 14px;
-  font-size: 13px;
+  padding: 4px 16px;
+  font-size: 12px;
   border: 1.5px solid rgba(155, 109, 255, 0.4);
   backdrop-filter: blur(8px);
   background: rgba(255, 255, 255, 0.3);
@@ -272,8 +265,8 @@ const tips = [
   background: linear-gradient(135deg, #91defe 0%, #bdb6ec 50%, #f9bccc 100%);
   color: #ffffff;
   border-radius: 20px;
-  padding: 4px 14px;
-  font-size: 13px;
+  padding: 4px 16px;
+  font-size: 12px;
   cursor: pointer;
   box-shadow: 0 4px 12px rgba(186, 171, 218, 0.3);
 }
@@ -284,8 +277,8 @@ const tips = [
 /* 进度条 */
 .mytravel-progress-info {
   display: flex;
-  padding-top: 12px;
-  padding-left: 16px;
+  padding-top: 8px;
+  padding-left: 32px;
   padding-bottom:8px;
   font-size: 14px;
   color: #6b5b8a;
@@ -302,7 +295,7 @@ const tips = [
   height: 20px;
 }
 .mytravel-progress-bar-wrapper {
-  padding: 0 16px;
+  padding: 0 32px;
 }
 .mytravel-progress-bar-bg {
   width: 100%;
@@ -318,7 +311,7 @@ const tips = [
 }
 .mytravel-next-stop {
   font-size: 14px;
-  margin-left: 200px;
+  margin-left: 150px;
   color: #9a8bc5;
   margin-top: 4px;
 }
@@ -329,7 +322,7 @@ const tips = [
   scrollbar-width: none;
   white-space: nowrap;
   padding: 16px 16px 4px 4px;
-  margin-left: 12px;
+  margin-left: 16px;
 }
 
 .mytravel-filter-buttons {
@@ -370,7 +363,7 @@ const tips = [
 
 /* 推荐路线 */
 .mytravel-section {
-  padding: 16px;
+  padding: 8px 24px;
 }
 .mytravel-section-title {
   font-size: 17px;
@@ -419,14 +412,13 @@ const tips = [
 .mytravel-star{
   width: 16px;
   height: 16px;
-  margin-top: 3px;
-  margin-right: 4px;
+  margin-top: 4px;
 }
 .mytravel-route-footer {
   display: flex;
-  align-items: center;
+  align-items: left;
   justify-content: space-between;
-  margin-top: 10px;
+  margin-top: 8px;
   font-size: 14px;
   color: #6b5b8a;
 }
@@ -460,7 +452,7 @@ const tips = [
   border-radius: 12px;
 }
 .tip-content {
-  margin-left: 12px;
+  margin-left: 16px;
   font-size: 16px;
 }
 .tip-title {
@@ -468,7 +460,7 @@ const tips = [
   color: #4a3d6e;
 }
 .tip-desc {
-  font-size: 14px;
+  font-size: 12px;
   color: #9a8bc5;
   margin-top: 2px;
 }
@@ -480,7 +472,7 @@ const tips = [
 
 .mytravel-meta-item {
   display: inline-block;
-  margin-right: 56px;
+  margin-right: 24px;
 }
 .mytravel-meta-item-gap {
   display: inline-block;
@@ -509,8 +501,5 @@ const tips = [
   font-size: 16px;
   font-weight: bold;
   color:#ffffff;
-}
-.mytravel-bottom-last{
-  height: 48px;
 }
 </style>

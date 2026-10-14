@@ -23,7 +23,7 @@ export default defineComponent({
 <style scoped>
 .jour-layout {
   margin:0px;
-  padding: 0px 16px;
+  padding: 0px 24px;
   display: flex;
   flex-direction: column;
 }
@@ -33,7 +33,7 @@ export default defineComponent({
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
   border-radius: 24px;
-  padding: 24px;
+  padding: 16px;
   border: 1px solid rgba(255, 255, 255, 0.5);
   box-shadow: 0 15px 40px rgba(186, 171, 218, 0.15);
 }
@@ -42,17 +42,19 @@ export default defineComponent({
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
+  margin-bottom: 8px;
 }
 
 .map-title {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 700;
+  padding: 0px 8px;
   color: #4a3d6e;
 }
 
 .map-stats {
-  font-size: 14px;
+  font-size: 12px;
+  padding: 0px 8px;
   color: #baabda;
   font-weight: 600;
 }

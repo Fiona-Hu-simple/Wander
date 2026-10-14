@@ -22,14 +22,14 @@ import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'JourneyPage',
-  components: { BgLayout, StatusBar , TripList,TripMap},
+  components: { BgLayout, StatusBar , TripList, TripMap},
 })
 </script>
 
 <style scoped>
 .home-header {
   position: relative;
-  padding: 48px 24px 0px;
+  padding: 36px 24px 0px;
 }
 
 .home-greeting-text {
