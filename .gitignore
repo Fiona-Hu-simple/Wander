@@ -39,6 +39,8 @@ __screenshots__/
 *.timestamp-*-*.mjs
 
 # Database
+.env
+server/.env
 server/*.db
 server/*.db-shm
 server/*.db-wal

@@ -1,36 +1,25 @@
-// router/index.ts
-import { createRouter, createWebHistory } from 'vue-router'
-import Login from '../views/login.vue'
-import Register from '../views/register.vue'
-import Home from '../views/home.vue'
-import Jour from '../views/jour.vue'
-import Picture from '../views/picture.vue'
-import My from '../views/my.vue'
-import MapView from '../views/map.vue'
-import Mytravel from '../components/jour/mytravel.vue'
-import Sanya from '../components/picture/sanya.vue'
+﻿import { createRouter, createWebHistory } from 'vue-router'
+import { installAuthGuard } from './guards'
+import { installRouteRecovery } from './navigation'
 
+// 页面按需加载；URL 和路由名称保持兼容。
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    { path: '/', redirect: '/login' },
-    { path: '/login', component: Login, name: 'Login' },
-    { path: '/register', component: Register, name: 'Register' },
-    { path: '/home', component: Home, name: 'Home', meta: { requiresAuth: true } },
-    { path: '/jour', component: Jour, name: 'Jour', meta: { requiresAuth: true } },
-    { path: '/picture', component: Picture, name: 'Picture', meta: { requiresAuth: true } },
-    { path: '/my', component: My, name: 'My', meta: { requiresAuth: true } },
-    { path: '/map', component: MapView, name: 'Map', meta: { requiresAuth: true } },
-    { path: '/mytravel', component: Mytravel, name: 'MyTravel', meta: { requiresAuth: true } },
-    { path: '/picture/sanya', component: Sanya, name: 'Sanya', meta: { requiresAuth: true } },
-  ]
+    { path: '/', redirect: '/home' },
+    { path: '/login', component: () => import('@/views/auth/LoginPage.vue'), name: 'Login', meta: { hideTabbar: true } },
+    { path: '/register', component: () => import('@/views/auth/RegisterPage.vue'), name: 'Register', meta: { hideTabbar: true } },
+    { path: '/home', component: () => import('@/views/chat/ChatPage.vue'), name: 'Home', meta: { requiresAuth: true } },
+    { path: '/jour', component: () => import('@/views/journey/JourneyPage.vue'), name: 'Jour', meta: { requiresAuth: true } },
+    { path: '/picture', component: () => import('@/views/gallery/GalleryPage.vue'), name: 'Picture', meta: { requiresAuth: true } },
+    { path: '/my', component: () => import('@/views/profile/ProfilePage.vue'), name: 'My', meta: { requiresAuth: true } },
+    { path: '/map', component: () => import('@/views/map/MapPage.vue'), name: 'Map', meta: { requiresAuth: true, hideTabbar: true } },
+    { path: '/mytravel', component: () => import('@/views/journey/TripDetailPage.vue'), name: 'MyTravel', meta: { requiresAuth: true, hideTabbar: true } },
+    { path: '/picture/sanya', component: () => import('@/views/gallery/RegionGalleryPage.vue'), name: 'Sanya', meta: { requiresAuth: true, hideTabbar: true } },
+    { path: '/:pathMatch(.*)*', redirect: '/home' },
+  ],
 })
 
-router.beforeEach((to) => {
-  const token = localStorage.getItem('token')
-  if (to.meta.requiresAuth && !token) {
-    return '/login'
-  }
-})
-
+installAuthGuard(router)
+installRouteRecovery(router)
 export default router

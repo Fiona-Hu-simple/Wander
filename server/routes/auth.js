@@ -1,7 +1,9 @@
 import { Router } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import db from '../db.js';
+import db from '../database/index.js';
+import { requireAuth } from '../middleware/auth.js';
+import { rateLimit } from '../middleware/rate-limit.js';
 
 const router = Router();
 
@@ -11,37 +13,27 @@ if (!JWT_SECRET) {
   throw new Error('JWT_SECRET is required');
 }
 const TOKEN_EXPIRES_IN = '7d';
+router.get('/me', requireAuth, (req, res) => res.json({ code: 200, data: { userId: req.user.id, username: req.user.username } }));
+
+function credentials(body) {
+  if (!body || typeof body.username !== 'string' || typeof body.password !== 'string') return null;
+  const username = body.username.trim();
+  const password = body.password;
+  if (username.length < 2 || username.length > 20 || password.length < 6 || Buffer.byteLength(password, 'utf8') > 72) return null;
+  return { username, password };
+}
+
 
 /**
  * POST /api/auth/register
  * 注册新用户
  * Body: { username, password }
  */
-router.post('/register', async (req, res) => {
+router.post('/register', rateLimit({ limit: 10, windowMs: 60000 }), async (req, res) => {
   try {
-    const { username, password } = req.body;
-
-    // 参数校验
-    if (!username || !password) {
-      return res.status(400).json({
-        code: 400,
-        message: '用户名和密码不能为空',
-      });
-    }
-
-    if (username.length < 2 || username.length > 20) {
-      return res.status(400).json({
-        code: 400,
-        message: '用户名长度需在 2-20 个字符之间',
-      });
-    }
-
-    if (password.length < 6) {
-      return res.status(400).json({
-        code: 400,
-        message: '密码长度至少 6 位',
-      });
-    }
+    const input = credentials(req.body);
+    if (!input) return res.status(400).json({ code: 400, message: '用户名须为 2-20 个字符，密码至少 6 位且不超过 72 字节' });
+    const { username, password } = input;
 
     // 检查用户名是否已存在
     const existingUser = db.prepare('SELECT id FROM users WHERE username = ?').get(username);
@@ -53,8 +45,7 @@ router.post('/register', async (req, res) => {
     }
 
     // 加密密码
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     // 插入用户
     const stmt = db.prepare('INSERT INTO users (username, password) VALUES (?, ?)');
@@ -69,6 +60,7 @@ router.post('/register', async (req, res) => {
       },
     });
   } catch (error) {
+    if (error.code === 'SQLITE_CONSTRAINT_UNIQUE') return res.status(409).json({ code: 409, message: '用户名已被注册' });
     console.error('注册失败:', error);
     res.status(500).json({
       code: 500,
@@ -82,17 +74,11 @@ router.post('/register', async (req, res) => {
  * 用户登录
  * Body: { username, password }
  */
-router.post('/login', async (req, res) => {
+router.post('/login', rateLimit({ limit: 20, windowMs: 60000 }), async (req, res) => {
   try {
-    const { username, password } = req.body;
-
-    // 参数校验
-    if (!username || !password) {
-      return res.status(400).json({
-        code: 400,
-        message: '用户名和密码不能为空',
-      });
-    }
+    const input = credentials(req.body);
+    if (!input) return res.status(400).json({ code: 400, message: '用户名须为 2-20 个字符，密码至少 6 位且不超过 72 字节' });
+    const { username, password } = input;
 
     // 查找用户
     const user = db.prepare('SELECT * FROM users WHERE username = ?').get(username);
@@ -116,7 +102,7 @@ router.post('/login', async (req, res) => {
     const token = jwt.sign(
       { userId: user.id, username: user.username },
       JWT_SECRET,
-      { expiresIn: TOKEN_EXPIRES_IN }
+      { expiresIn: TOKEN_EXPIRES_IN, algorithm: 'HS256' }
     );
 
     res.json({
